@@ -38,15 +38,12 @@ def generar_aleatorio(n):
     return A
 
 def generear_ordenado_asc(n):
-    A = []
-    for i in range(n):
-        A.append(i)
+    A = list(range(0, n))
     return A
 
 def generar_ordenado_des(n):
-    A = []
-    for i in range(n):
-        A.append(n - i)
+    A = list(range(0, n))
+    A.reverse()
     return A
 
 
