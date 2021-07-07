@@ -35,7 +35,15 @@ def _comparar_curvas(fitted_a, fitted_b):
 def generar_aleatorio(n):
     A = list(range(0, n))
     shuffle(A)
+    return A
 
+def generear_ordenado_asc(n):
+    A = list(range(0, n))
+    return A
+
+def generar_ordenado_des(n):
+    A = list(range(0, n))
+    A.reverse()
     return A
 
 
@@ -82,12 +90,42 @@ class PruebasBurbuja(unittest.TestCase):
 
 
     def test_mejor_caso(self):
-        self.fail('Pendiente de implementar')
 
+        print()
 
+        best, fitted = big_o.big_o(burbuja_optimizado, generear_ordenado_asc, min_n=10, max_n=1000,
+                                   n_measures=100, n_repeats=3, verbose=False,
+                                   classes=[cmpl.Linear], return_raw_data=True)
+
+        _graficar(fitted, 'burbuja optimizada (mejor caso)')
+
+        if not isinstance(best, big_o.complexities.Linear):
+            warnings.warn(
+                f'Complejidad esperada Lineal, complejidad estimada {best}')
+     
+        
     def test_peor_caso(self):
-        self.fail('Pendiente de implementar')
+
+        print()
+        best, fitted = big_o.big_o(burbuja_optimizado, generar_ordenado_des, min_n=10, max_n=1000,
+                                   n_measures=100, n_repeats=3, verbose=False,
+                                   classes=[cmpl.Linear, cmpl.Quadratic], return_raw_data=True)
+
+        _graficar(fitted, 'burbuja optimizada (peór caso)')
+
+        if not isinstance(best, big_o.complexities.Quadratic):
+            warnings.warn(
+                f'Complejidad esperada Cuadrática, complejidad estimada {best}')
 
 
     def test_caso_promedio(self):
-        self.fail('Pendiente de implementar')
+        print()
+        best, fitted = big_o.big_o(burbuja_optimizado, generar_aleatorio, min_n=10, max_n=1000,
+                                   n_measures=100, n_repeats=3, verbose=False,
+                                   classes=[cmpl.Linear, cmpl.Quadratic], return_raw_data=True)
+
+        _graficar(fitted, 'caso promedio (burbuja optimizado)')
+
+        if not isinstance(best, big_o.complexities.Quadratic):
+            warnings.warn(
+                f'Complejidad esperada Cuadrática, complejidad estimada {best}')
